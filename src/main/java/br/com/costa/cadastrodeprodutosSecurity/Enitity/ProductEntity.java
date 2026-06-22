@@ -1,14 +1,13 @@
-package br.com.costa.cadastrodeprodutosSecurity.Enitity;
+package br.com.costa.cadastrodeprodutosSecurity.enitity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
+@Table(name = "products")
 @Getter
 @Setter
 @Builder
@@ -19,8 +18,16 @@ public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String description;
-    private double price;
+
+    @Column(nullable = false)
+    private BigDecimal price;
+
+    @Column(nullable = false)
     private int quantity;
 }

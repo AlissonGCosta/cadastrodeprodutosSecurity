@@ -1,4 +1,4 @@
-package br.com.costa.cadastrodeprodutosSecurity.Enitity.EntityEnum;
+package br.com.costa.cadastrodeprodutosSecurity.enitity.entityenum;
 
 public enum EntityStatus {
     USER,

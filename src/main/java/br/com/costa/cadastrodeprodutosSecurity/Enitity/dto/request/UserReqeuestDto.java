@@ -1,7 +1,8 @@
-package br.com.costa.cadastrodeprodutosSecurity.Enitity.dto.request;
+package br.com.costa.cadastrodeprodutosSecurity.enitity.dto.request;
 
-import br.com.costa.cadastrodeprodutosSecurity.Enitity.EntityEnum.EntityStatus;
+import org.springframework.validation.annotation.Validated;
 
+@Validated
 public record UserReqeuestDto(
 
          String name,

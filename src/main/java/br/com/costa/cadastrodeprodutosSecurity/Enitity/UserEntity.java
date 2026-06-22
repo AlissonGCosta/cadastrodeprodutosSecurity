@@ -1,15 +1,13 @@
-package br.com.costa.cadastrodeprodutosSecurity.Enitity;
+package br.com.costa.cadastrodeprodutosSecurity.enitity;
 
-import br.com.costa.cadastrodeprodutosSecurity.Enitity.EntityEnum.EntityStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import br.com.costa.cadastrodeprodutosSecurity.enitity.entityenum.EntityStatus;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
 
 @Entity
+@Table(name  = "users")
 @Getter
 @Setter
 @Builder
@@ -18,12 +16,19 @@ import java.util.UUID;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
     private EntityStatus status;
 
 }

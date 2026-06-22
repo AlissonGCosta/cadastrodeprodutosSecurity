@@ -1,6 +1,6 @@
-package br.com.costa.cadastrodeprodutosSecurity.Enitity.dto.response;
+package br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response;
 
-import br.com.costa.cadastrodeprodutosSecurity.Enitity.EntityEnum.EntityStatus;
+import br.com.costa.cadastrodeprodutosSecurity.enitity.entityenum.EntityStatus;
 
 import java.util.UUID;
 
