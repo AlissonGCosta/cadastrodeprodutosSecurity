@@ -1,11 +1,13 @@
 package br.com.costa.cadastrodeprodutosSecurity.service;
 
-import br.com.costa.cadastrodeprodutosSecurity.Enitity.EntityEnum.EntityStatus;
-import br.com.costa.cadastrodeprodutosSecurity.Enitity.UserEntity;
-import br.com.costa.cadastrodeprodutosSecurity.Enitity.dto.request.UserReqeuestDto;
-import br.com.costa.cadastrodeprodutosSecurity.Enitity.dto.response.UserResponseDto;
+import br.com.costa.cadastrodeprodutosSecurity.config.PasswordConfig;
+import br.com.costa.cadastrodeprodutosSecurity.enitity.entityenum.EntityStatus;
+import br.com.costa.cadastrodeprodutosSecurity.enitity.UserEntity;
+import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.request.UserReqeuestDto;
+import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.UserResponseDto;
 import br.com.costa.cadastrodeprodutosSecurity.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordConfig passwordConfig;
 
     public void createUser(UserReqeuestDto userReqeuestDto) {
 
@@ -25,7 +28,7 @@ public class UserService {
         UserEntity userEntity = new UserEntity();
                 userEntity.setName(userReqeuestDto.name());
                 userEntity.setEmail(userReqeuestDto.email());
-                userEntity.setPassword(userReqeuestDto.password());
+                userEntity.setPassword(passwordConfig.passwordEncoder().encode(userReqeuestDto.password()));
                 userEntity.setStatus(EntityStatus.USER);
 
 
