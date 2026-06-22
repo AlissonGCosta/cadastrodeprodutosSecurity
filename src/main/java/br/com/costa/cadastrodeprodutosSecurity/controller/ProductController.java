@@ -1,0 +1,36 @@
+package br.com.costa.cadastrodeprodutosSecurity.controller;
+
+import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.request.ProductRequestDto;
+import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.ProductLoginResposneDto;
+import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.ProductResposneDto;
+import br.com.costa.cadastrodeprodutosSecurity.enitity.mapper.ProductMapper;
+import br.com.costa.cadastrodeprodutosSecurity.service.ProductService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("v1/product")
+@RequiredArgsConstructor
+public class ProductController {
+
+    private final ProductService productService;
+    private final ProductMapper productMapper;
+
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductLoginResposneDto createProduct(@RequestBody @Valid ProductRequestDto dto) {
+        productService.createProduct(dto);
+        return productMapper.toProductLoginResponse(dto);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductResposneDto> getAllProducts() {
+        return productService.findAll();
+    }
+}
