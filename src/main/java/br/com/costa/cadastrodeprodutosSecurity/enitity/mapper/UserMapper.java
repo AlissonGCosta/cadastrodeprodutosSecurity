@@ -12,6 +12,7 @@ public class UserMapper {
         return new UserLoginResponseDto(
                 dto.email(),
                 dto.name()
+
         );
     }
 }
