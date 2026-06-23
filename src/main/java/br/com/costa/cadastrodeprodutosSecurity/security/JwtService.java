@@ -3,14 +3,12 @@ package br.com.costa.cadastrodeprodutosSecurity.security;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.Date;
 
 @Service
@@ -30,13 +28,14 @@ public class JwtService {
                 .claim("role", user.getStatus().name())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expirationTime))
+                .signWith(getSigninKey())
                 .compact();
 
 
     }
 
     private SecretKey getSigninKey() {
-        byte[] KeyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
+        byte[] KeyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(KeyBytes);
     }
 
@@ -50,6 +49,19 @@ public class JwtService {
 
     public String extractEmail(String token) {
         return extractClaims(token).getSubject();
+    }
+
+    public boolean isTokenValid(String token, UserEntity user) {
+
+        String email = extractEmail(token);
+
+        return email.equals(user.getEmail()) && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(String token) {
+        return extractClaims(token)
+                .getExpiration()
+                .before(new Date());
     }
 
 

@@ -2,8 +2,10 @@ package br.com.costa.cadastrodeprodutosSecurity.security.service;
 
 import br.com.costa.cadastrodeprodutosSecurity.enitity.UserEntity;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.request.UserLoginRequestDto;
-import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.UserLoginResponseDto;
+import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.UserLoginAuthResponseDto;
 import br.com.costa.cadastrodeprodutosSecurity.repository.UserRepository;
+import br.com.costa.cadastrodeprodutosSecurity.security.JwtService;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,30 +20,26 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-    public UserLoginResponseDto login( UserLoginRequestDto dto) {
+    public UserLoginAuthResponseDto login( UserLoginRequestDto dto) {
         UserEntity userEntity = userRepository.findByEmail(dto.email())
                 .orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
-
-
-        boolean passwordMatches = passwordEncoder.matches(
-                dto.senha(),
-                userEntity.getPassword()
-        );
-        if (!passwordMatches) {
-            throw new RuntimeException("senha invalida");
-        }
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         dto.email(),
-                        dto.senha()
+                        dto.password()
                 )
         );
 
-        return new UserLoginResponseDto(
+        String token = jwtService.generateToken(userEntity);
+
+        return new UserLoginAuthResponseDto(
                 userEntity.getName(),
-                userEntity.getEmail()
+                userEntity.getEmail(),
+                token
+
         );
     }
 
