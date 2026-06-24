@@ -8,6 +8,7 @@ public record ProductLoginResposneDto(
         String name,
         String description,
         BigDecimal price,
+        String category,
         int quantity
 ) {
 }
