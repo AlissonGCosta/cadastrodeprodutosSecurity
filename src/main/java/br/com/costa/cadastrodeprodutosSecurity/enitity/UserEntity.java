@@ -1,5 +1,6 @@
 package br.com.costa.cadastrodeprodutosSecurity.enitity;
 
+import br.com.costa.cadastrodeprodutosSecurity.config.PasswordConfig;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.entityenum.EntityStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,6 +15,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity {
+
+     PasswordConfig passwordConfig;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,4 +34,9 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private EntityStatus status;
 
+    public UserEntity(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = passwordConfig.passwordEncoder().encode(password);
+    }
 }
