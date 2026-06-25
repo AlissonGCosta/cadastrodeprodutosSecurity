@@ -4,6 +4,7 @@ import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.request.UserLoginRequ
 import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.UserLoginAuthResponseDto;
 
 import br.com.costa.cadastrodeprodutosSecurity.security.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public UserLoginAuthResponseDto login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
+    public UserLoginAuthResponseDto login(@RequestBody @Valid UserLoginRequestDto userLoginRequestDto) {
         return  authService.login(userLoginRequestDto);
     }
 }

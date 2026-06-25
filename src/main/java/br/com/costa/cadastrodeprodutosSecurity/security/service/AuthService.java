@@ -4,12 +4,10 @@ import br.com.costa.cadastrodeprodutosSecurity.enitity.UserEntity;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.request.UserLoginRequestDto;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.UserLoginAuthResponseDto;
 import br.com.costa.cadastrodeprodutosSecurity.repository.UserRepository;
-import br.com.costa.cadastrodeprodutosSecurity.security.JwtService;
-import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import static br.com.costa.cadastrodeprodutosSecurity.utils.Utils.logger;
 import org.springframework.stereotype.Service;
 
 
@@ -22,8 +20,8 @@ public class AuthService {
     private final JwtService jwtService;
 
     public UserLoginAuthResponseDto login( UserLoginRequestDto dto) {
-        UserEntity userEntity = userRepository.findByEmail(dto.email())
-                .orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
+
+        logger.info("Iniciate Login :: UserLoginRequestDto");
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -31,6 +29,9 @@ public class AuthService {
                         dto.password()
                 )
         );
+
+        UserEntity userEntity = userRepository.findByEmail(dto.email())
+                .orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
 
         String token = jwtService.generateToken(userEntity);
 
@@ -40,6 +41,7 @@ public class AuthService {
                 token
 
         );
+
     }
 
 

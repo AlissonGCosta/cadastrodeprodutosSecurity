@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserEntity {
 
-     PasswordConfig passwordConfig;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -37,6 +37,7 @@ public class UserEntity {
     public UserEntity(String name, String email, String password) {
         this.name = name;
         this.email = email;
-        this.password = passwordConfig.passwordEncoder().encode(password);
+        this.password = password;
+        this.status = EntityStatus.USER;
     }
 }

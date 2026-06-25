@@ -1,4 +1,4 @@
-package br.com.costa.cadastrodeprodutosSecurity.security;
+package br.com.costa.cadastrodeprodutosSecurity.security.service;
 
 import br.com.costa.cadastrodeprodutosSecurity.enitity.UserEntity;
 import br.com.costa.cadastrodeprodutosSecurity.repository.UserRepository;
@@ -48,7 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userEntity.getEmail(),
                         null,
-                        List.of(new SimpleGrantedAuthority("ROLE_" + userEntity.getStatus().name()))
+                        null
                 );
 
                 authentication.setDetails(

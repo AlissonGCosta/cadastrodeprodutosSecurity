@@ -50,6 +50,7 @@ public class ProductEntity {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.quantity = quantity;
         this.category = category;
         this.createdAt = LocalDate.now();
         this.updatedAt = LocalDate.now();
