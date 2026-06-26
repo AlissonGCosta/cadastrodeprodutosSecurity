@@ -8,6 +8,7 @@ import br.com.costa.cadastrodeprodutosSecurity.enitity.productenum.ProductEnum;
 import br.com.costa.cadastrodeprodutosSecurity.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import static br.com.costa.cadastrodeprodutosSecurity.utils.Utils.logger;
 
 import java.time.LocalDate;
 
@@ -26,6 +27,7 @@ public class ProductService {
         // validando o produto
         productValidationService.validate(dto);
 
+        logger.info("dados recebidos: {}", dto );
         // salvando o produto
         productRepository.save(productMapper.toProductEntity(dto));
     }
