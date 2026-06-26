@@ -17,6 +17,7 @@ public class ValidationUserService {
             throw new RuntimeException("email already exists");
         }
 
+        // validate camps
         if(dto.password().length() < 8){
             throw new RuntimeException("password too short");
         }
