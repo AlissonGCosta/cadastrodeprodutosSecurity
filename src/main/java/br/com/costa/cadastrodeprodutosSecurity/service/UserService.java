@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 
 @Service
@@ -27,6 +28,7 @@ public class UserService {
         validationUserService.validateUser(userReqeuestDto);
 
 
+
         // salvando no MySqul
         userRepository.save(userMapper.toEntity(userReqeuestDto));
 
@@ -40,7 +42,7 @@ public class UserService {
                         user.getId(),
                         user.getName(),
                         user.getEmail(),
-                        user.getStatus()
+                        user.getRole()
 
                 )).toList();
 

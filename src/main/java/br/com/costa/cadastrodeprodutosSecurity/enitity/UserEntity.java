@@ -32,12 +32,12 @@ public class UserEntity {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private EntityStatus status;
+    private EntityStatus role;
 
     public UserEntity(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.status = EntityStatus.USER;
+        this.role = EntityStatus.ROLE_USER;
     }
 }

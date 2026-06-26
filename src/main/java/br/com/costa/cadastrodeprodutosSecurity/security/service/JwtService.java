@@ -32,7 +32,7 @@ public class JwtService {
                 .subject(user.getEmail())
                 .claim("id", user.getId().toString())
                 .claim("name", user.getName())
-                .claim("role", user.getStatus().name())
+                .claim("role", user.getRole().name())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(getSigninKey())
