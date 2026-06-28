@@ -52,4 +52,10 @@ public class ProductController {
 
         return productMapper.toProductLoginResponse(dto);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProduct(@PathVariable UUID id) {
+        productService.deleteProduct(id);
+    }
 }
