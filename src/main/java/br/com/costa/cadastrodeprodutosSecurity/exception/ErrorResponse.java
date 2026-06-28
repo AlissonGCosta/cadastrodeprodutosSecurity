@@ -1,20 +1,19 @@
 package br.com.costa.cadastrodeprodutosSecurity.exception;
 
-import lombok.Getter;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
-public class ErrorResponse {
+public record ErrorResponse(
 
-    private List<Error> errors;
+        LocalDateTime timestamp,
+        int status,
+        String erro,
+        String message,
+        String path,
+        List<Error> errors
+) {
 
-    public ErrorResponse(List<Error> errors) {
-        this.errors = new ArrayList<>();
-    }
 
-    public void addError(Error error) {
-        this.errors.add(error);
-    }
+
 }
