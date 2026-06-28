@@ -8,6 +8,7 @@ import br.com.costa.cadastrodeprodutosSecurity.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("v1/product")
 @RequiredArgsConstructor
+@Validated
 public class ProductController {
 
     private final ProductService productService;
