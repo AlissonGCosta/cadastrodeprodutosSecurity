@@ -33,10 +33,5 @@ public class UserController {
         
     }
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<UserResponseDto> getAllUsers() {
 
-       return userService.listAllUsers();
-    }
 }

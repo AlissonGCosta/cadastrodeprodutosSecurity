@@ -6,6 +6,7 @@ import br.com.costa.cadastrodeprodutosSecurity.enitity.UserEntity;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.request.UserReqeuestDto;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.UserLoginResponseDto;
 
+import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.UserResponseDto;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.entityenum.EntityStatus;
 import br.com.costa.cadastrodeprodutosSecurity.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,4 +49,6 @@ public class UserMapper {
 
         );
     }
+
+
 }

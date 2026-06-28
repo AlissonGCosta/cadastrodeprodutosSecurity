@@ -34,17 +34,5 @@ public class UserService {
 
     }
 
-    // metodo para listar todos os usuarios
-    public List<UserResponseDto> listAllUsers() {
 
-      return  userRepository.findAll().stream()
-                .map(user -> new UserResponseDto(
-                        user.getId(),
-                        user.getName(),
-                        user.getEmail(),
-                        user.getRole()
-
-                )).toList();
-
-    }
 }
