@@ -5,12 +5,21 @@ import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.request.ProductReques
 import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.ProductLoginResposneDto;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.ProductResposneDto;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.productenum.ProductEnum;
+import br.com.costa.cadastrodeprodutosSecurity.exception.errocase.RessourceNotFoundException;
+import br.com.costa.cadastrodeprodutosSecurity.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class ProductMapper {
+
+    private final ProductRepository productRepository;
+
+
 
     // resposta do controler/post
     public ProductLoginResposneDto toProductLoginResponse(ProductRequestDto dto) {
@@ -43,6 +52,23 @@ public class ProductMapper {
                 dto.getQuantity(),
                 dto.getCategory()
         );
+    }
+
+    public ProductEntity putToProductEntity(UUID id, ProductRequestDto dto) {
+
+        ProductEntity product = productRepository.findById(id)
+                .orElseThrow(() -> new RessourceNotFoundException("id not found"));
+
+
+        product.setName(dto.name());
+        product.setDescription(dto.description());
+        product.setPrice(dto.price());
+        product.setCategory(dto.category());
+        product.setQuantity(dto.quantity());
+
+
+        return product;
+
     }
 
 }
