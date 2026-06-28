@@ -3,6 +3,7 @@ package br.com.costa.cadastrodeprodutosSecurity.enitity.mapper;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.ProductEntity;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.request.ProductRequestDto;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.ProductLoginResposneDto;
+import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.ProductResposneDto;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.productenum.ProductEnum;
 import org.springframework.stereotype.Component;
 
@@ -32,4 +33,16 @@ public class ProductMapper {
                 dto.quantity()
         );
     }
+
+    public ProductResposneDto toProductResponse(ProductEntity dto) {
+        return new ProductResposneDto(
+                dto.getId(),
+                dto.getName(),
+                dto.getDescription(),
+                dto.getPrice(),
+                dto.getQuantity(),
+                dto.getCategory()
+        );
+    }
+
 }

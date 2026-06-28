@@ -5,6 +5,7 @@ import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.request.ProductReques
 import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.response.ProductResposneDto;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.mapper.ProductMapper;
 import br.com.costa.cadastrodeprodutosSecurity.enitity.productenum.ProductEnum;
+import br.com.costa.cadastrodeprodutosSecurity.exception.errocase.RessourceNotFoundException;
 import br.com.costa.cadastrodeprodutosSecurity.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import static br.com.costa.cadastrodeprodutosSecurity.utils.Utils.logger;
 import java.time.LocalDate;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +46,15 @@ public class ProductService {
                        product.getQuantity(),
                        product.getCategory()
                )).toList();
+    }
+
+    public ProductResposneDto findById(UUID id){
+
+        var product = productRepository.findById(id).
+                orElseThrow(() -> new RessourceNotFoundException("product not found"));
+
+
+        return  productMapper.toProductResponse(product);
+
     }
 }

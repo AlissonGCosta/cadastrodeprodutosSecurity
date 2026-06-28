@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/product")
@@ -34,5 +35,12 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     public List<ProductResposneDto> getAllProducts() {
         return productService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductResposneDto getProductById( @PathVariable  UUID id) {
+       return productService.findById(id);
+
     }
 }
