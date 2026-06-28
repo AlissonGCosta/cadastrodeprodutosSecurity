@@ -57,4 +57,17 @@ public class ProductService {
         return  productMapper.toProductResponse(product);
 
     }
+
+   public void putProduct(UUID id, ProductRequestDto dto){
+
+       productRepository.save(productMapper.putToProductEntity(id, dto));
+   }
+
+   public void deleteProduct(UUID id){
+
+        productRepository.findById(id)
+                .orElseThrow(() -> new RessourceNotFoundException("product not found"));
+
+        productRepository.deleteById(id);
+   }
 }
