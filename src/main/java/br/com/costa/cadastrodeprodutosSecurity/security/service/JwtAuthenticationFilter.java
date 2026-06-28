@@ -2,6 +2,7 @@ package br.com.costa.cadastrodeprodutosSecurity.security.service;
 
 import br.com.costa.cadastrodeprodutosSecurity.enitity.UserEntity;
 import br.com.costa.cadastrodeprodutosSecurity.repository.UserRepository;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,7 +39,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         final String jwtToken = authHeader.substring(7);
-        final String email = jwtService.extractEmail(jwtToken);
+        final String email;
+
+        try{
+            email =jwtService.extractEmail(jwtToken);
+        }catch (ExpiredJwtException ex){
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.getWriter().write("""
+                {
+                  "status": 401,
+                  "error": "Unauthorized",
+                  "message": "Token expired"
+                }
+                """
+
+            );
+            return;
+        }
 
         if(email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserEntity userEntity = userRepository.findByEmail(email)

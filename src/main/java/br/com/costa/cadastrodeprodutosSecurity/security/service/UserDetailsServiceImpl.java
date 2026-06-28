@@ -1,5 +1,6 @@
 package br.com.costa.cadastrodeprodutosSecurity.security.service;
 
+import br.com.costa.cadastrodeprodutosSecurity.exception.errocase.RessourceNotFoundException;
 import br.com.costa.cadastrodeprodutosSecurity.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -18,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         var user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RessourceNotFoundException("User not found"));
 
 
         return User.builder()
