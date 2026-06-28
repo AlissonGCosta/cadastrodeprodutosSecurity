@@ -43,4 +43,13 @@ public class ProductController {
        return productService.findById(id);
 
     }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductLoginResposneDto updateProduct(@PathVariable UUID id, @RequestBody @Valid ProductRequestDto dto) {
+
+        productService.putProduct(id, dto);
+
+        return productMapper.toProductLoginResponse(dto);
+    }
 }
