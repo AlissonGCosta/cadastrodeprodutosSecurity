@@ -31,6 +31,8 @@ public class SecurityConfig {
                        .requestMatchers(HttpMethod.POST, "/v1/product").hasAuthority("ROLE_ADMIN")
                        .requestMatchers(HttpMethod.GET, "/v1/product").hasAuthority("ROLE_USER")
                        .requestMatchers(HttpMethod.GET, "/v1/product/{id}").hasAuthority("ROLE_USER")
+                       .requestMatchers(HttpMethod.PUT, "/v1/product/{id}").hasAuthority("ROLE_ADMIN")
+                       .requestMatchers(HttpMethod.DELETE, "/v1/product/{id}").hasAuthority("ROLE_ADMIN")
                        .requestMatchers("/error").permitAll()
                        .anyRequest().authenticated()
 
