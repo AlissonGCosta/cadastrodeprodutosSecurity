@@ -1,5 +1,7 @@
 package br.com.costa.cadastrodeprodutosSecurity.exception;
 
+import br.com.costa.cadastrodeprodutosSecurity.exception.errocase.ConflictException;
+import br.com.costa.cadastrodeprodutosSecurity.exception.errocase.RessourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +35,41 @@ public class GlobalExceptionHandler {
                 request.getRequestURI(),
                 fieldErrors
         );
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
 
-    @ExceptionHandler()
+    @ExceptionHandler(RessourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleRessourceNotFoundException(
+            RessourceNotFoundException ex,
+            HttpServletRequest request
+    ){
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                "Ressource not found",
+                ex.getMessage(),
+                request.getRequestURI(),
+                null
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ErrorResponse> handleConflictException(
+        ConflictException ex,
+        HttpServletRequest request){
+
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                "Conflict Error",
+                ex.getMessage(),
+                request.getRequestURI(),
+                null
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
 
     private Error toFieldErrorResponse(FieldError fieldError){
         return new Error(
