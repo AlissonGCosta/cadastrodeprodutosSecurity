@@ -1,6 +1,7 @@
 package br.com.costa.cadastrodeprodutosSecurity.service;
 
 import br.com.costa.cadastrodeprodutosSecurity.enitity.dto.request.ProductRequestDto;
+import br.com.costa.cadastrodeprodutosSecurity.exception.errocase.BusinessException;
 import br.com.costa.cadastrodeprodutosSecurity.exception.errocase.ConflictException;
 import br.com.costa.cadastrodeprodutosSecurity.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +26,16 @@ public class ProductValidationService {
 
 
         if(dto.description().length() < 10){
-            throw new RuntimeException("Description is too short");
+            throw new BusinessException("Description is too short");
         }
 
 
         if(dto.price().doubleValue() == 0){
-            throw new RuntimeException("Price cant be zero");
+            throw new BusinessException("Price cant be zero");
         }
-
+        if(dto.price().doubleValue() < 0){
+            throw new BusinessException("Price cant be minor zero");
+        }
 
 
 

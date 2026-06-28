@@ -9,20 +9,21 @@ import org.springframework.validation.annotation.Validated;
 import java.math.BigDecimal;
 @Validated
 public record ProductRequestDto(
-        @NotBlank
+
+         @NotBlank(message = "name is empty")
          String name,
-         @NotBlank
+
+         @NotBlank(message = "description is empty")
          String description,
 
-         @NotNull
-         @Positive
+         @NotNull(message = "price is empty")
          BigDecimal price,
 
-         @NotBlank
+         @NotBlank(message = "category is empty")
          String category,
 
-         @NotNull
-         @Positive
+         @NotNull(message = "quantity is empty")
+         @Positive(message = "negative quantity is not possible")
          int quantity
 ) {
 }

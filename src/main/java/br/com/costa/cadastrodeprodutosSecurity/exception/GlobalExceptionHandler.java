@@ -1,5 +1,6 @@
 package br.com.costa.cadastrodeprodutosSecurity.exception;
 
+import br.com.costa.cadastrodeprodutosSecurity.exception.errocase.BusinessException;
 import br.com.costa.cadastrodeprodutosSecurity.exception.errocase.ConflictException;
 import br.com.costa.cadastrodeprodutosSecurity.exception.errocase.RessourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
                 "Validation Error",
-                "Invalid Reques Body",
+                "Invalid Request Body",
                 request.getRequestURI(),
                 fieldErrors
         );
@@ -55,10 +56,28 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ErrorResponse> handleBusinessException(
+            BusinessException ex,
+            HttpServletRequest request
+    ){
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Invalid Request Body",
+                ex.getMessage(),
+                request.getRequestURI(),
+                null
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
     @ExceptionHandler(ConflictException.class)
     public ResponseEntity<ErrorResponse> handleConflictException(
         ConflictException ex,
         HttpServletRequest request){
+
+
 
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
